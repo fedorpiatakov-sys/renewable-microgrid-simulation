@@ -1,3 +1,7 @@
+from pathlib import Path
+
+Path("figures").mkdir(exist_ok=True)
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize_scalar
@@ -267,3 +271,9 @@ axes3[0].legend()
 axes3[1].plot(c_unserved_values, optimal_capacities)
 axes3[1].set_xlabel('Unserved cost [€ / kWh]')
 axes3[1].set_ylabel('Optimal battery capacity [kWh]')
+
+fig1.savefig("figures/system_simulation.png", dpi=200, bbox_inches="tight")
+fig2.savefig("figures/battery_capacity_study.png", dpi=200, bbox_inches="tight")
+fig3.savefig("figures/economic_optimization.png", dpi=200, bbox_inches="tight")
+
+plt.show()
