@@ -119,7 +119,7 @@ E_{\mathrm{loss},i} =
 \end{cases}
 ```
 
-The residual of the energy balance is evaluated numerically at each time step using numpy.allclose with an absolute tolerance of $10^{-10},\mathrm{kWh}$ and zero relative tolerance.
+The residual of the energy balance is evaluated numerically at each time step using numpy.allclose with an absolute tolerance of $10^{-10}\,\mathrm{kWh}$ and zero relative tolerance.
 
 The verification is performed for the reference simulation and for all battery capacities considered in the parameter study.
 
