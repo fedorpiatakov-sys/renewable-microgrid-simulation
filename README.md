@@ -213,7 +213,7 @@ Consequently, the calculated optimal battery capacities are specific to the assu
 
 ### Requirements
 
-- Python 3.10 or newer
+- Python 3.12 or newer
 - NumPy
 - SciPy
 - Matplotlib
