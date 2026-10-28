@@ -192,3 +192,60 @@ For unserved energy costs of 5 €/kWh and 10 €/kWh, the optimizer reaches the
 The numerical optimization results were additionally compared with a discrete grid search to check their plausibility.
 
 The results illustrate the trade-off between investment costs and supply reliability: increasing battery capacity reduces energy shortages but also increases storage costs. The economically favorable capacity depends on the assumed cost parameters and operating conditions.
+
+## Assumptions and Limitations
+
+The model is intended as a simplified numerical investigation of renewable energy storage rather than a detailed representation of a real microgrid.
+
+The following assumptions and limitations should be considered when interpreting the results:
+
+- **Synthetic input data:** PV generation, wind generation, and electricity demand are represented by simplified synthetic profiles rather than measured data. Seasonal variations and correlations between weather conditions are not explicitly modeled.
+- **Limited simulation period:** The system is simulated over 30 days. The results are therefore dependent on the selected generation and demand profiles and should not be interpreted as representative annual performance.
+- **Simplified battery model:** The battery is modeled using a constant charging and discharging efficiency of 95%. Maximum charging and discharging power, self-discharge, battery degradation, and temperature effects are neglected.
+- **Initial conditions:** The initial battery energy influences the simulated system performance. The economic optimization uses a constant initial energy of 25 kWh for all investigated capacities. No cyclic condition requiring equal initial and final stored energy is imposed.
+- **Simplified operating strategy:** The battery is charged whenever renewable generation exceeds demand and discharged whenever demand exceeds generation. Predictive control and alternative energy management strategies are not considered.
+- **Simplified economic assessment:** Battery investment costs are annualized using an assumed lifetime and discount rate. Operating costs, maintenance, battery replacement, and other system costs are excluded. The cost of unserved energy is treated as an illustrative parameter rather than a value derived from a specific application.
+- **Model verification:** The numerical energy balance is checked for consistency at each time step. However, the model has not been validated against experimental measurements or operational data.
+
+Consequently, the calculated optimal battery capacities are specific to the assumed system parameters, synthetic profiles, and economic conditions. They should not be interpreted as general design recommendations for real-world microgrids.
+
+## Installation and Usage
+
+### Requirements
+
+- Python 3.10 or newer
+- NumPy
+- SciPy
+- Matplotlib
+
+### Running the Simulation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/fedorpiatakov-sys/renewable-microgrid-simulation.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd renewable-microgrid-simulation
+```
+
+Install the required Python packages:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Run the simulation:
+
+```bash
+python microgrid-simulation.py
+```
+
+The script generates synthetic generation and demand profiles, simulates battery operation, verifies the energy balance, and performs the technical parameter study and economic optimization.
+
+The numerical results are printed to the console, while the simulation results and optimization outcomes are visualized using Matplotlib.
+
+A fixed random seed (`42`) is used to ensure reproducibility of the synthetic input profiles.
