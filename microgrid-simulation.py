@@ -26,7 +26,7 @@ eta_battery = 0.95              # -
 # Economic parameters
 c_investment = 250              # €/kWh
 lifetime = 10                   # years
-interest_rate = 0.05            # 1 / years  
+interest_rate = 0.05            # -  
 c_unserved_0 = 2                # €/kWh
 
 # Simulation parameters
@@ -237,7 +237,7 @@ optimal_capacities = []
 for c in c_unserved_values:
     res = minimize_scalar(
         lambda C: total_cost(C, c),
-        bounds=(E_battery_initial, C_max),
+        bounds=(C_min, C_max),
         method='bounded'
     )
     optimal_capacities.append(res.x)
