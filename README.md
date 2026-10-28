@@ -122,3 +122,73 @@ E_{\mathrm{loss},i} =
 The residual of the energy balance is evaluated numerically at each time step using numpy.allclose with an absolute tolerance of $10^{-10},\mathrm{kWh}$ and zero relative tolerance.
 
 The verification is performed for the reference simulation and for all battery capacities considered in the parameter study.
+
+## Results and Discussion
+
+### 1. System Simulation
+
+![System simulation](figures/system_simulation.png)
+
+**Figure 1:** Simulated photovoltaic and wind generation, electrical demand, battery state of charge (SOC), curtailed energy, and unserved energy over the first three days.
+
+The simulation demonstrates the interaction between fluctuating renewable generation, electricity demand, and battery storage.
+
+During periods of excess generation, the battery absorbs surplus energy until its maximum capacity is reached. Additional surplus energy is curtailed.
+
+During periods of insufficient generation, the battery supplies stored energy to compensate for the deficit. Once the battery is depleted, the remaining demand cannot be served.
+
+The battery therefore reduces both renewable energy curtailment and supply shortages, although its effectiveness is limited by the available storage capacity.
+
+### 2. Battery Capacity Study
+
+![Battery capacity study](figures/battery_capacity_study.png)
+
+**Figure 2:** Influence of battery capacity on the fraction of curtailed renewable energy and the fraction of electrical demand served.
+
+Battery capacities ranging from 50 to 1600 kWh were investigated under two different initial conditions:
+
+- **Initial SOC of 50%:** The initial stored energy increases proportionally with battery capacity.
+- **Constant initial energy of 25 kWh:** All battery configurations start with the same amount of stored energy.
+
+Increasing battery capacity generally improves supply reliability and reduces renewable energy curtailment.
+
+However, the improvement becomes progressively smaller as storage capacity increases.
+
+The comparison also illustrates the influence of initial conditions. When the initial SOC is fixed at 50%, larger batteries benefit from a greater amount of initially stored energy.
+
+For the subsequent economic optimization, a constant initial energy of 25 kWh is used to ensure that all battery configurations are compared under identical initial energy conditions.
+
+### 3. Economic Capacity Optimization
+
+![Economic optimization](figures/economic_optimization.png)
+
+**Figure 3:** Total system cost as a function of battery capacity and sensitivity of the optimal capacity to the assumed cost of unserved energy.
+
+An illustrative economic optimization was performed to identify the battery capacity that minimizes the combined costs of installed storage capacity and unserved energy.
+
+The objective function is defined as:
+
+```math
+J(C) = c_{\mathrm{battery}} C + c_{\mathrm{unserved}} E_{\mathrm{unserved,tot}}(C)
+```
+
+where:
+
+- $C$ is the installed battery capacity [kWh].
+- $c_{\mathrm{battery}}$ is the annualized battery investment cost allocated to the 30-day simulation period [€/kWh].
+- $c_{\mathrm{unserved}}$ is the assumed cost of unserved energy [€/kWh].
+- $E_{\mathrm{unserved,tot}}(C)$ is the total unserved energy over the simulation period [kWh].
+
+Battery investment costs are annualized using an assumed lifetime of 10 years and a discount rate of 5%.
+
+The optimization is performed using `scipy.optimize.minimize_scalar` within a battery capacity range of 25–2000 kWh.
+
+For an assumed unserved energy cost of **2 €/kWh**, the resulting optimal battery capacity is approximately **927 kWh**.
+
+The sensitivity analysis shows that higher costs of unserved energy favor larger battery capacities, while lower costs favor smaller capacities.
+
+For unserved energy costs of 5 €/kWh and 10 €/kWh, the optimizer reaches the upper capacity bound of 2000 kWh. These results therefore represent constrained optima within the investigated range rather than unconstrained optimal capacities.
+
+The numerical optimization results were additionally compared with a discrete grid search to check their plausibility.
+
+The results illustrate the trade-off between investment costs and supply reliability: increasing battery capacity reduces energy shortages but also increases storage costs. The economically favorable capacity depends on the assumed cost parameters and operating conditions.
